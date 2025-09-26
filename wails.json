@@ -1,0 +1,23 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "myitools",
+  "outputfilename": "myitools",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "MyiToolsApp",
+    "email": "hello@myitools.com"
+  },
+  "info": {
+    "companyName": "MyiToolsApp",
+    "productName": "MyiToolsApp",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright © 2023, MyiToolsApp",
+    "comments": "iOS设备管理工具"
+  },
+  "nsisType": "multiple",
+  "obfuscated": false,
+  "garbleargs": ""
+}
