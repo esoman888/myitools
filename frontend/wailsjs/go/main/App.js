@@ -6,6 +6,26 @@ export function BackupDevice(arg1, arg2, arg3, arg4) {
   return window['go']['main']['App']['BackupDevice'](arg1, arg2, arg3, arg4);
 }
 
+export function CheckBackupEncryptionStatus(arg1) {
+  return window['go']['main']['App']['CheckBackupEncryptionStatus'](arg1);
+}
+
+export function DeleteBackup(arg1) {
+  return window['go']['main']['App']['DeleteBackup'](arg1);
+}
+
+export function GetBackupInfo(arg1) {
+  return window['go']['main']['App']['GetBackupInfo'](arg1);
+}
+
+export function GetBackupProgress(arg1) {
+  return window['go']['main']['App']['GetBackupProgress'](arg1);
+}
+
+export function GetDefaultBackupDir() {
+  return window['go']['main']['App']['GetDefaultBackupDir']();
+}
+
 export function GetDeviceInfo(arg1) {
   return window['go']['main']['App']['GetDeviceInfo'](arg1);
 }
@@ -14,6 +34,26 @@ export function GetDevices() {
   return window['go']['main']['App']['GetDevices']();
 }
 
+export function ListBackups(arg1) {
+  return window['go']['main']['App']['ListBackups'](arg1);
+}
+
+export function OpenDirectoryDialog(arg1, arg2) {
+  return window['go']['main']['App']['OpenDirectoryDialog'](arg1, arg2);
+}
+
+export function OpenFileDialog(arg1, arg2) {
+  return window['go']['main']['App']['OpenFileDialog'](arg1, arg2);
+}
+
 export function RestoreDevice(arg1, arg2, arg3) {
   return window['go']['main']['App']['RestoreDevice'](arg1, arg2, arg3);
+}
+
+export function SaveFileDialog(arg1, arg2) {
+  return window['go']['main']['App']['SaveFileDialog'](arg1, arg2);
+}
+
+export function SetBackupEncryption(arg1, arg2, arg3) {
+  return window['go']['main']['App']['SetBackupEncryption'](arg1, arg2, arg3);
 }

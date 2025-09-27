@@ -1,8 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import DeviceInfoView from '../views/DeviceInfoView.vue'
+import BackupView from '../views/BackupView.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -12,17 +14,12 @@ const router = createRouter({
     {
       path: '/device/:id',
       name: 'device-info',
-      component: () => import('../views/DeviceInfoView.vue')
+      component: DeviceInfoView
     },
     {
-      path: '/backup/:id',
+      path: '/backup',
       name: 'backup',
-      component: () => import('../views/BackupView.vue')
-    },
-    {
-      path: '/filesystem/:id',
-      name: 'filesystem',
-      component: () => import('../views/FileSystemView.vue')
+      component: BackupView
     }
   ]
 })

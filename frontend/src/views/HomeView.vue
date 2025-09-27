@@ -3,17 +3,17 @@
     <!-- 顶部导航栏 -->
     <div class="bg-white shadow-sm border-b">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center">
-            <h1 class="text-xl font-semibold text-gray-900">MyiToolsApp</h1>
-          </div>
-          <div class="flex items-center space-x-4">
+        <!-- <div class="flex justify-between items-center h-16"> -->
+          <!-- <div class="flex items-center"> -->
+            <!-- <h1 class="text-xl font-semibold text-gray-900">MyiToolsApp</h1> -->
+          <!-- </div> -->
+          <!-- <div class="flex items-center space-x-4">
             <el-button size="small" @click="refreshDevices" :loading="deviceStore.isLoading">
               <el-icon><Refresh /></el-icon>
               刷新设备
             </el-button>
-          </div>
-        </div>
+          </div> -->
+        <!-- </div> -->
       </div>
     </div>
 
@@ -80,6 +80,9 @@
                     <el-dropdown-menu>
                       <el-dropdown-item @click="goToBackup(device)">备份/恢复</el-dropdown-item>
                       <el-dropdown-item @click="goToFileSystem(device)">文件管理</el-dropdown-item>
+                      <el-dropdown-item @click="copyToClipboard()">照片管理</el-dropdown-item>
+                      <!-- <el-dropdown-item @click="goToFileSystem(device)">文件管理</el-dropdown-item> -->
+
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -143,8 +146,8 @@
                 <el-icon class="text-green-600 text-xl"><FolderOpened /></el-icon>
               </div>
               <div class="ml-4">
-                <h3 class="text-lg font-medium text-gray-900">备份设备</h3>
-                <p class="text-sm text-gray-500">创建设备数据备份</p>
+                <h3 class="text-lg font-medium text-gray-900">备份与恢复</h3>
+                <p class="text-sm text-gray-500">备份和恢复设备数据</p>
               </div>
             </div>
             <div class="mt-4">
@@ -180,6 +183,7 @@
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDeviceStore } from '../stores/device'
+import { ElMessage } from 'element-plus'
 import { 
   Refresh, 
   Iphone, 
@@ -224,6 +228,10 @@ const goToBackup = (device) => {
 
 const goToFileSystem = (device) => {
   router.push({ name: 'filesystem', params: { id: device.udid } })
+}
+
+const copyToClipboard = () => {
+  ElMessage.info('功能开发中...')
 }
 
 // 开始自动刷新设备列表

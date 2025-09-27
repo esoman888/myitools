@@ -15,10 +15,10 @@
             <el-icon><Refresh /></el-icon>
             刷新
           </el-button>
-          <el-button :type="autoRefresh ? 'success' : 'default'" size="small" @click="toggleAutoRefresh">
+          <!-- <el-button :type="autoRefresh ? 'success' : 'default'" size="small" @click="toggleAutoRefresh">
             <el-icon><Timer /></el-icon>
             {{ autoRefresh ? '自动刷新中' : '自动刷新' }}
-          </el-button>
+          </el-button> -->
           <el-button type="primary" size="small">
             数据到剪贴板
           </el-button>
@@ -122,7 +122,7 @@ const deviceStore = useDeviceStore()
 
 const deviceInfo = computed(() => deviceStore.currentDevice)
 const refreshInterval = ref(5000) // 刷新间隔，默认5秒
-const autoRefresh = ref(true) // 是否自动刷新
+const autoRefresh = ref(false) // 是否自动刷新
 let refreshTimer = null // 刷新定时器
 const initialLoading = ref(true) // 初始加载状态
 const silentLoading = ref(false) // 静默刷新状态
