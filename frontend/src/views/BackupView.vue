@@ -414,12 +414,19 @@ async function toggleBackupEncryption(enable) {
       })
       password = value
     } else {
-      // 取消加密需要确认
-      await ElMessageBox.confirm('确定要取消备份加密吗？', '取消备份加密', {
+      // 取消加密需要输入当前密码
+      const { value } = await ElMessageBox.prompt('请输入当前的备份加密密码以取消加密', '取消备份加密', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        inputType: 'password',
+        inputValidator: (value) => {
+          if (!value) {
+            return '请输入当前的加密密码'
+          }
+          return true
+        }
       })
+      password = value
     }
     
     isCheckingEncryption.value = true

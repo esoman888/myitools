@@ -51,56 +51,34 @@ func CheckBackupEncryptionStatus(udid string) (bool, error) {
 		return false, errors.New("设备未连接")
 	}
 
-	// 使用 idevicebackup2 info 命令来检查加密状态
-	args := []string{"-u", udid, "info"}
+	// 使用 ideviceinfo 命令查询备份加密状态
+	args := []string{"-u", udid, "-q", "com.apple.mobile.backup"}
 	
-	fmt.Printf("执行命令检测加密状态: idevicebackup2 %s\n", strings.Join(args, " "))
+	fmt.Printf("执行命令检测加密状态: ideviceinfo %s\n", strings.Join(args, " "))
 	
 	// 创建命令
-	cmd := exec.Command("idevicebackup2", args...)
+	cmd := exec.Command("ideviceinfo", args...)
 	
 	// 执行命令并获取输出
 	output, err := cmd.CombinedOutput()
 	outputStr := string(output)
 	fmt.Printf("命令输出: %s\n", outputStr)
 	
-	// 如果命令执行失败，尝试另一种方法
 	if err != nil {
-		// 尝试使用 encryption 命令检查状态
-		args = []string{"-u", udid, "encryption", "off", "-i"}
-		cmd = exec.Command("idevicebackup2", args...)
-		output, _ = cmd.CombinedOutput()
-		outputStr = string(output)
-		
-		// 如果输出包含"Backup encryption is not enabled"，则表示未加密
-		if strings.Contains(outputStr, "Backup encryption is not enabled") {
-			return false, nil
-		}
-		
-		// 如果包含"already disabled"，也表示未加密
-		if strings.Contains(outputStr, "already disabled") {
-			return false, nil
-		}
-		
-		// 如果包含"Enter password"或"Wrong password"，表示已加密
-		if strings.Contains(outputStr, "Enter password") || strings.Contains(outputStr, "Wrong password") {
-			return true, nil
-		}
-		
-		// 默认返回未加密状态
-		return false, nil
+		fmt.Printf("执行ideviceinfo命令失败: %v\n", err)
+		return false, fmt.Errorf("无法获取设备备份信息: %v", err)
 	}
 	
-	// 解析 info 命令的输出
-	// 查找加密相关的信息
-	if strings.Contains(outputStr, "WillEncrypt: true") || 
-	   strings.Contains(outputStr, "encryption enabled") ||
-	   strings.Contains(outputStr, "encrypted: true") {
-		return true, nil
-	}
+	// 检查 PasswordProtected 和 WillEncrypt 字段
+	// PasswordProtected: true 表示备份需要密码保护
+	// WillEncrypt: true 表示备份将被加密
+	passwordProtected := strings.Contains(outputStr, "PasswordProtected: true")
+	willEncrypt := strings.Contains(outputStr, "WillEncrypt: true")
 	
-	// 默认返回未加密状态
-	return false, nil
+	fmt.Printf("备份加密状态检测结果: PasswordProtected=%v, WillEncrypt=%v\n", passwordProtected, willEncrypt)
+	
+	// 如果任一字段为true，则认为备份已启用加密
+	return passwordProtected || willEncrypt, nil
 }
 
 // SetBackupEncryption 设置备份加密状态
